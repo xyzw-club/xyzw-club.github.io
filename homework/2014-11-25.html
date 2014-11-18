@@ -1,0 +1,118 @@
+---
+title: XYZW Meeting 1 25th Nov 2014 
+layout: default
+---
+<h1>Get-together 1 - Nov 24th</h1>
+
+<p>A fun and instructive first project would be to build a software 3d rasterizer/renderer.</p>
+
+<p>I hope that will give us some insight into what the GPU does (and doesn't) before working our way back up towards webgl and glsl and all that malarkey.</p>
+
+<h2>Homework</h2>
+
+<p>
+I've written the bare bones of a software renderer for the <a href="http://threejs.org">three.js</a> webgl framework. I'm not a big fan of three.js, but I've used it because I'm familiar with how it all fits together.
+</p>
+
+<p>
+The code is on <a href="https://github.com/xyzw-club/softwareRenderer">github</a> and you'll need to check it out and serve the pages with your webserver of choice, something like this should do it:
+</p>
+
+<pre>
+  $ git clone https://github.com/xyzw-club/softwareRenderer.git
+  $ cd softwareRenderer
+  $ python -m SimpleHTTPServer
+</pre>
+
+<p>
+Opening the page in a browser, you should see two canvas elements which are rendering the same scene (ie. the same collection of 3d objects and materials). 
+</p>
+
+
+<p>
+On the left is three.js's built-in webgl rendering path - with lights, textures and a normal map. 
+</p>
+
+<p>
+On the right is the 2d canvas created by the <a href="https://github.com/xyzw-club/softwareRenderer/blob/master/js/XYZWRenderer.js">XYZWRenderer</a> I wrote. It's, um, less good, rendering only the vertices in the model.</p>
+
+<p> But, look! As if by magic, it projects these 3d vertices on to a 2d canvas.</p>
+<p>It's easier to convince yourself that it's doing something if you click the animate checkbox.
+</p>
+
+
+<h2> Perspective transforms and vector spaces </h2>
+
+<p>
+One place to start would be is to break down how it performs that projection magic. 
+</p>
+
+<p>
+The important bit is in the <a href="https://github.com/xyzw-club/softwareRenderer/blob/master/js/XYZWRenderer.js#L17">projectVertex</a> function. This takes a vertex position in object space, transforms it into world space and then does a perspective projection through view space into screen space. And that's really all there is to it. Ahem.
+</p>
+
+<p>
+I find this stuff really hard to understand. I've found a bunch of online articles that go into detail about it, each of them confusing and illuminating in their own ways.
+</p>
+
+<ul>
+  <li>
+  <a href="http://www.opengl-tutorial.org/beginners-tutorials/tutorial-3-matrices/">
+    http://www.opengl-tutorial.org/beginners-tutorials/tutorial-3-matrices/
+  </a>
+  </li>
+  <li>
+  <a href="http://blog.db-in.com/cameras-on-opengl-es-2-x/">
+    http://blog.db-in.com/cameras-on-opengl-es-2-x/
+  </a>
+  </li>
+  <li>
+  <a href="http://msdn.microsoft.com/en-us/library/windows/desktop/bb206365(v=vs.85).aspx">
+    http://msdn.microsoft.com/en-us/library/windows/desktop/bb206365(v=vs.85).aspx
+  </a>
+  </li>
+  <li>
+  <a href="http://www.songho.ca/opengl/gl_transform.html">
+    http://www.songho.ca/opengl/gl_transform.html
+  </a>
+  </li>
+  <li>
+  <a href="http://www.codinglabs.net/article_world_view_projection_matrix.aspx">
+    http://www.codinglabs.net/article_world_view_projection_matrix.aspx
+  </a>
+  </li>
+</ul>
+
+<h2>
+  Going further with the software renderer
+</h2>
+
+<p>
+Some ideas for what we might choose to work on or discuss:
+</p>
+
+<ol>
+  <li>
+  Drawing lines instead of just vertices.<br/>
+  (maybe using canvas line primitives or for the braver, bresenham's line algorithm)
+  </li>
+  <li>
+  Drawing triangles instead of lines.<br/>
+  (again, using canvas shape primitives or with a custom rasterizer)
+  </li>
+  <li>
+  Lighting models for triangle shading<br/>
+  (per face, per vertex, per pixel? Normal interpolation, etc.)
+  </li>
+  <li>
+  Texture mapping
+  </li>
+  <li>
+  Normal mapping
+  </li>
+  <li>
+  Something amazing that I haven't thought of
+  </li>
+</ol>
+
+<p>See you there...</p>
